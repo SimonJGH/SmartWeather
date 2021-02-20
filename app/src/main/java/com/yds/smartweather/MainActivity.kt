@@ -1,21 +1,17 @@
 package com.yds.smartweather
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import com.yds.smartweather.databinding.ActivityMainBinding
-import com.yds.smartweather.network.RetrofitHelper
-import com.yds.smartweather.network.RetrofitService
 import kotlinx.coroutines.*
 import retrofit2.*
-import java.lang.Exception
 import java.lang.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private var token: String = ""
 
@@ -23,12 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-
-        /*binding.btRequestBanner.setOnClickListener(View.OnClickListener {
-            GlobalScope.launch {
-                getBanner()
-            }
-        })*/
 
     }
 
@@ -49,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun main() {
+    fun coroutineScopes() {
         //实际开发中调用
         val job = Job()
         val coroutineScope = CoroutineScope(job)
@@ -58,18 +48,9 @@ class MainActivity : AppCompatActivity() {
         }
         job.cancel()
 
-        //
         GlobalScope.launch {
-//            Log.i("Simon", "a")
-//            delay(1500)
-//            Log.i("Simon", "b")
-        }
-        Thread.sleep(1000)
-
-        runBlocking {
         }
 
-        val start = System.currentTimeMillis()
         //依次执行
         runBlocking {
             repeat(100000) {
@@ -79,9 +60,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val end = System.currentTimeMillis()
-        val l = end - start
-        Log.i("Simon", "stop = $l")
     }
 
     suspend fun second() = coroutineScope {
@@ -91,17 +69,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun test() {
-        runBlocking {
-            val async1 = async {
-                5 + 6
-            }
-            val async2 = async {
-                5 + 6
-            }
-
-            val i = async1.await() + async2.await()
-            Log.i("Simon", "result = $i")
-        }
-    }
 }

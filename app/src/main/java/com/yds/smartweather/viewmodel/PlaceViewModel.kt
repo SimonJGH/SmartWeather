@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.yds.smartweather.Repository
-import com.yds.smartweather.model.Place
+import com.yds.smartweather.model.PlaceResponse
 
 /**
  * @author YDS
@@ -13,7 +13,13 @@ import com.yds.smartweather.model.Place
  */
 class PlaceViewModel : ViewModel() {
     private val searchLiveData = MutableLiveData<String>()
-    val placeList = ArrayList<Place>()
+    val placeList = ArrayList<PlaceResponse.Place>()
+
+    fun savePlace(place: PlaceResponse.Place) = Repository.savePlace(place)
+
+    fun queryPlace() = Repository.queryPlace()
+
+    fun isPlaceSaved() = Repository.isPlaceSaved()
 
     fun searchPlaces(query: String) {
         searchLiveData.value = query
